@@ -21,6 +21,7 @@ export const BackToLogonButton = styled.TouchableOpacity`
   right: 0;
   left: 0;
   bottom: 0;
+  background: #312e38;
 
   justify-content: center;
   align-items: center;

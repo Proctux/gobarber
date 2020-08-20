@@ -37,13 +37,13 @@ const SignUp: React.FC = () => {
             <View>
               <Title>Crie sua conta</Title>
             </View>
-            <Form ref={formRef} onSubmit={handleSignUp} style={{flex: 1}}>
+            <Form ref={formRef} onSubmit={handleSignUp}>
               <Input name="name" icon="user" placeholder="Nome" />
               <Input name="email" icon="mail" placeholder="E-mail" />
               <Input name="password" icon="lock" placeholder="Senha" />
 
               <View>
-                <Button onPress={() => { console.log('criado ') }}>Cadastrar</Button>
+                <Button onPress={() => { formRef.current?.submitForm(); }}>Cadastrar</Button>
               </View>
             </Form>
           </Container>
