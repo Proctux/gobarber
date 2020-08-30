@@ -7,6 +7,7 @@ import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
 import Input from '../../components/Input';
+import { useAuth } from '../../hooks/auth';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -22,7 +23,11 @@ import { Container, Title, ForgotPassword, ForgotPasswordText, CreateAccountButt
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
   const passwordInputRef = useRef<TextInput>(null)
+
   const navigation = useNavigation();
+
+  const { signIn } = useAuth();
+
 
   const handleSignIn = useCallback(async (data: SignInFormData) => { 
     try {
@@ -40,7 +45,12 @@ const SignIn: React.FC = () => {
         abortEarly: false,
       })
 
-      console.log(data)
+      await signIn({
+        email: data.email,
+        password: data.password
+      });
+
+      
     } catch(err) {
       if(err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err)
@@ -54,7 +64,7 @@ const SignIn: React.FC = () => {
       'Ocorreu um erro ao fazer o login, cheque as credenciais',
       )
     }
-   }, []);
+   }, [signIn]);
 
   return (
     <>

@@ -5,13 +5,16 @@ import Icon from 'react-native-vector-icons/Feather';
 import logoImg from '../../assets/logo.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import getValidationErrors from '../../utils/getValidationErrors';
+import api from '../../services/api';
+
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-
-import getValidationErrors from '../../utils/getValidationErrors';
-
 import { useNavigation } from '@react-navigation/native';
+
+
+
 
 interface SignUpFormData {
   name: string;
@@ -42,6 +45,12 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false
       })
+
+      await api.post('/users', data);
+
+      Alert.alert('Cadastro realizado com sucesso. Você já pode fazer login na aplicação.');
+
+      navigation.goBack();
     } catch (err) {
       if(err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
@@ -54,8 +63,10 @@ const SignUp: React.FC = () => {
       Alert.alert('Erro no cadastro',
         'Ocorreu um erro ao tentar salvar os dados. Por favor, cheque as credenciais'
       )
+
+      console.error(err);
     }
-  }, [])
+  }, [navigation])
 
   return (
     <>
