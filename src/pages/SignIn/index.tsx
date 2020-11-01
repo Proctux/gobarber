@@ -29,7 +29,7 @@ const SignIn: React.FC = () => {
   const { signIn } = useAuth();
 
 
-  const handleSignIn = useCallback(async (data: SignInFormData) => { 
+  const handleSignIn = useCallback(async (data: SignInFormData) => {
     try {
       formRef.current?.setErrors({});
 
@@ -50,7 +50,7 @@ const SignIn: React.FC = () => {
         password: data.password
       });
 
-      
+
     } catch(err) {
       if(err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err)
@@ -85,12 +85,12 @@ const SignIn: React.FC = () => {
           </View>
 
           <Form ref={formRef} onSubmit={handleSignIn}>
-            <Input 
+            <Input
               autoCorrect={false}
               autoCapitalize="none"
               keyboardType="email-address"
-              name="email" 
-              icon="mail" 
+              name="email"
+              icon="mail"
               placeholder="E-mail"
               returnKeyType="next"
               onSubmitEditing={() => {
@@ -99,10 +99,10 @@ const SignIn: React.FC = () => {
               />
 
             <Input
-              ref={passwordInputRef} 
-              name="password" 
-              icon="lock" 
-              placeholder="Senha" 
+              ref={passwordInputRef}
+              name="password"
+              icon="lock"
+              placeholder="Senha"
               secureTextEntry
               returnKeyType="send"
               onSubmitEditing={() => { formRef.current?.submitForm(); } }
