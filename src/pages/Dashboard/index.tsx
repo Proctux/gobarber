@@ -1,11 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Button } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 
 import { useAuth } from '../../hooks/auth';
 
-import { Container, Header, HeaderTitle, UserName, ProfileButton, UserAvatar, ProvidersList } from './styles';
+import {
+  Container,
+  Header,
+  HeaderTitle,
+  UserName,
+  ProfileButton,
+  UserAvatar,
+  ProvidersList,
+  ProviderContainer,
+  ProviderAvatar,
+  ProviderName,
+  ProviderInfo,
+  ProviderMeta,
+  ProviderMetaText,
+  ProviderListTitle
+} from './styles';
 
 export interface Provider {
   id: string;
@@ -20,14 +35,46 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     api.get('providers').then((response) => {
-      setProviders[response.data];
+      setProviders(response.data);
     })
   });
 
   const navigateToProfile = useCallback(() => {
     // navigate('Profile');
     signOut();
-  }, [])
+  }, []);
+
+  const navigateToCreateAppointment = useCallback((providerId: string) => {
+    navigate('CreateAppointment', { providerId });
+  }, [navigate]);
+
+  const providerListTitle = useCallback(() => (
+    <ProviderListTitle>
+      Cabeleireiros
+    </ProviderListTitle>
+  ), []);
+
+  const renderItem = useCallback(({ item: provider }) => (
+    <ProviderContainer onPress={() => navigateToCreateAppointment(provider.id)}>
+      <ProviderAvatar source={{ uri: provider.avatar_url }} />
+
+      <ProviderInfo>
+        <ProviderName>
+          {provider.name}
+        </ProviderName>
+
+        <ProviderMeta>
+          <Icon name="calendar" size={14} color="#ff9000" />
+          <ProviderMetaText>Segunda à sexta</ProviderMetaText>
+        </ProviderMeta>
+
+        <ProviderMeta>
+          <Icon name="clock" size={14} color="#ff9000" />
+          <ProviderMetaText>8h às 18h</ProviderMetaText>
+        </ProviderMeta>
+      </ProviderInfo>
+    </ProviderContainer>
+  ), [])
 
   return (
     <Container>
@@ -45,7 +92,8 @@ const Dashboard: React.FC = () => {
       <ProvidersList
         data={providers}
         keyExtractor={(provider) => provider.id}
-        renderItem={({ item }) => <UserName>{item.name}</UserName>}
+        ListHeaderComponent={providerListTitle}
+        renderItem={item => renderItem(item)}
       />
 
     </Container>
