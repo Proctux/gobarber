@@ -1,24 +1,66 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { useAuth } from '../../hooks/auth';
+import api from '../../services/api';
 
-import { Container, Header, BackButton, HeaderTitle, UserAvatar } from './styles';
+import { Container,
+  Header,
+  BackButton,
+  HeaderTitle,
+  UserAvatar,
+  ProvidersListContainer,
+  ProvidersList,
+  ProviderContainer,
+  ProviderAvatar,
+  ProviderName
+} from './styles';
 
 interface RouteParams {
   providerId: string;
 }
 
+export interface Provider {
+  id: string;
+  name: string;
+  avatar_url: string;
+}
+
 const CreateAppointment: React.FC = () => {
+  const [providers, setProviders] = useState<Provider[]>([]);
+
   const route = useRoute();
   const { user } = useAuth();
   const { goBack } = useNavigation();
-  const { providerId } = route.params as RouteParams;
+  const routeParams = route.params as RouteParams;
+
+  const [selectedProvider, setSelectedProvider] = useState(routeParams.providerId);
+  console.log(selectedProvider)
 
   const navigateBack = useCallback(() => {
     goBack();
-  }, [goBack])
+  }, [goBack]);
+
+  useEffect(() => {
+    api.get('providers').then(response => {
+      setProviders(response.data)
+    })
+  }, []);
+
+  const handleSelectedProvider = useCallback((providerId: string) => {
+    setSelectedProvider(providerId);
+  }, []);
+
+  const renderItem = useCallback(({ item: provider }) => (
+    <ProviderContainer
+      onPress={() => handleSelectedProvider(provider.id)}
+      selected={provider.id === selectedProvider}
+    >
+      <ProviderAvatar source={{ uri: provider.avatar_url }} />
+      <ProviderName selected={provider.id === selectedProvider}>{provider.name}</ProviderName>
+    </ProviderContainer>
+  ), [handleSelectedProvider, selectedProvider]);
 
   return (
     <Container>
@@ -31,6 +73,16 @@ const CreateAppointment: React.FC = () => {
 
         <UserAvatar source={{ uri: user.avatar_url }} />
       </Header>
+
+      <ProvidersListContainer>
+        <ProvidersList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={providers}
+          keyExtractor={(provider) => provider.id}
+          renderItem={item => renderItem(item)}
+        />
+      </ProvidersListContainer>
     </Container>
   )
 };
