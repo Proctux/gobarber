@@ -36,5 +36,5 @@ export const BackToLogonButtonText = styled.Text`
   margin-left: 16px;
   color: #f4ede8;
   font-size: 18px;
-  font-family: "RobotoSlab-Regular";
+  font-family: 'RobotoSlab-Regular';
 `;

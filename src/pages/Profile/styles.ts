@@ -9,8 +9,7 @@ export const Container = styled.View`
   padding: 0 30px ${Platform.OS === 'ios' ? 150 : 40}px;
 `;
 
-export const UserAvatarButton = styled.TouchableOpacity`
-`;
+export const UserAvatarButton = styled.TouchableOpacity``;
 
 export const UserAvatar = styled.Image`
   height: 186px;

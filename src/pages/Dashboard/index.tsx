@@ -19,7 +19,7 @@ import {
   ProviderInfo,
   ProviderMeta,
   ProviderMetaText,
-  ProviderListTitle
+  ProviderListTitle,
 } from './styles';
 
 export interface Provider {
@@ -34,52 +34,57 @@ const Dashboard: React.FC = () => {
   const { navigate } = useNavigation();
 
   useEffect(() => {
-    api.get('providers').then((response) => {
+    api.get('providers').then(response => {
       setProviders(response.data);
-    })
+    });
   }, []);
 
   const navigateToProfile = useCallback(() => {
     navigate('Profile');
   }, [navigate]);
 
-  const navigateToCreateAppointment = useCallback((providerId: string) => {
-    navigate('CreateAppointment', { providerId });
-  }, [navigate]);
+  const navigateToCreateAppointment = useCallback(
+    (providerId: string) => {
+      navigate('CreateAppointment', { providerId });
+    },
+    [navigate],
+  );
 
-  const providerListTitle = useCallback(() => (
-    <ProviderListTitle>
-      Cabeleireiros
-    </ProviderListTitle>
-  ), []);
+  const providerListTitle = useCallback(
+    () => <ProviderListTitle>Cabeleireiros</ProviderListTitle>,
+    [],
+  );
 
-  const renderItem = useCallback(({ item: provider }) => (
-    <ProviderContainer onPress={() => navigateToCreateAppointment(provider.id)}>
-      <ProviderAvatar source={{ uri: provider.avatar_url }} />
+  const renderItem = useCallback(
+    ({ item: provider }) => (
+      <ProviderContainer
+        onPress={() => navigateToCreateAppointment(provider.id)}
+      >
+        <ProviderAvatar source={{ uri: provider.avatar_url }} />
 
-      <ProviderInfo>
-        <ProviderName>
-          {provider.name}
-        </ProviderName>
+        <ProviderInfo>
+          <ProviderName>{provider.name}</ProviderName>
 
-        <ProviderMeta>
-          <Icon name="calendar" size={14} color="#ff9000" />
-          <ProviderMetaText>Segunda à sexta</ProviderMetaText>
-        </ProviderMeta>
+          <ProviderMeta>
+            <Icon name="calendar" size={14} color="#ff9000" />
+            <ProviderMetaText>Segunda à sexta</ProviderMetaText>
+          </ProviderMeta>
 
-        <ProviderMeta>
-          <Icon name="clock" size={14} color="#ff9000" />
-          <ProviderMetaText>8h às 18h</ProviderMetaText>
-        </ProviderMeta>
-      </ProviderInfo>
-    </ProviderContainer>
-  ), [])
+          <ProviderMeta>
+            <Icon name="clock" size={14} color="#ff9000" />
+            <ProviderMetaText>8h às 18h</ProviderMetaText>
+          </ProviderMeta>
+        </ProviderInfo>
+      </ProviderContainer>
+    ),
+    [navigateToCreateAppointment],
+  );
 
   return (
     <Container>
       <Header>
         <HeaderTitle>
-          Bem-vindo, {"\n"}
+          Bem-vindo, {'\n'}
           <UserName>{user.name}</UserName>
         </HeaderTitle>
 
@@ -90,14 +95,12 @@ const Dashboard: React.FC = () => {
 
       <ProvidersList
         data={providers}
-        keyExtractor={(provider) => provider.id}
+        keyExtractor={provider => provider.id}
         ListHeaderComponent={providerListTitle}
         renderItem={item => renderItem(item)}
       />
-
     </Container>
-
-  )
-}
+  );
+};
 
 export default Dashboard;
