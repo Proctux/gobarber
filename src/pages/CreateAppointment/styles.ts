@@ -7,7 +7,7 @@ import { Provider } from './index';
 
 interface ProviderContainerProps {
   selected: boolean;
-};
+}
 
 interface ProviderNameProps {
   selected: boolean;
@@ -20,7 +20,7 @@ export const Container = styled.View`
 interface HourProps {
   selected: boolean;
   available: boolean;
-};
+}
 
 interface HourTextProps {
   selected: boolean;
@@ -36,8 +36,7 @@ export const Header = styled.View`
   align-items: center;
 `;
 
-export const BackButton = styled.TouchableOpacity`
-`;
+export const BackButton = styled.TouchableOpacity``;
 
 export const HeaderTitle = styled.Text`
   color: #f4ede8;
@@ -64,7 +63,7 @@ export const ProvidersList = styled(FlatList as new () => FlatList<Provider>)`
 `;
 
 export const ProviderContainer = styled(RectButton)<ProviderContainerProps>`
-  background: ${(props) => (props.selected ? "#ff9000" : "#3e3b47")};
+  background: ${props => (props.selected ? '#ff9000' : '#3e3b47')};
   flex-direction: row;
   padding: 8px 12px;
   align-items: center;
@@ -82,12 +81,10 @@ export const ProviderName = styled.Text<ProviderNameProps>`
   margin-left: 8px;
   font-family: 'RobotoSlab-Medium';
   font-size: 16px;
-  color: ${props => (props.selected ? "#232129" : "#f4ede8")};
+  color: ${props => (props.selected ? '#232129' : '#f4ede8')};
 `;
 
-export const Calendar = styled.View`
-
-`;
+export const Calendar = styled.View``;
 
 export const Title = styled.Text`
   font-family: 'RobotoSlab-Medium';
@@ -130,13 +127,11 @@ export const SectionContent = styled.ScrollView.attrs({
   contentContainerStyle: { paddingHorizontal: 24 },
   horizontal: true,
   showsHorizontalScrollIndicator: false,
-})`
-
-`;
+})``;
 
 export const Hour = styled(RectButton)<HourProps>`
   padding: 12px;
-  background: ${props => props.selected ? "#ff9000" : "#3e3b47"};
+  background: ${props => (props.selected ? '#ff9000' : '#3e3b47')};
   border-radius: 10px;
   margin-right: 8px;
 
@@ -144,7 +139,7 @@ export const Hour = styled(RectButton)<HourProps>`
 `;
 
 export const HourText = styled.Text<HourTextProps>`
-  color: ${props => props.selected ? "#232129" : "#f4ede8"};
+  color: ${props => (props.selected ? '#232129' : '#f4ede8')};
   font-family: 'RobotoSlab-Regular';
   font-size: 16px;
 `;

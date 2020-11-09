@@ -12,9 +12,8 @@ const AppRoutes: React.FC = () => (
   <Auth.Navigator
     screenOptions={{
       headerShown: false,
-      cardStyle: { backgroundColor: '#312e38'},
+      cardStyle: { backgroundColor: '#312e38' },
     }}
-
   >
     <Auth.Screen name="Dashboard" component={Dashboard} />
     <Auth.Screen name="CreateAppointment" component={CreateAppointment} />

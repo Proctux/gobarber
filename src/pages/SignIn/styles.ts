@@ -9,7 +9,6 @@ export const Container = styled.View`
   padding: 0 30px ${Platform.OS === 'android' ? 150 : 40}px;
 `;
 
-
 export const Title = styled.Text`
   font-size: 24px;
   color: #f4ede8;
