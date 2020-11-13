@@ -132,7 +132,7 @@ const Profile: React.FC = () => {
         takePhotoButtonTitle: 'Usar câmera',
         chooseFromLibraryButtonTitle: 'Escolha da galeria',
       },
-      async response => {
+      response => {
         if (response.didCancel) {
           return;
         }
@@ -150,9 +150,14 @@ const Profile: React.FC = () => {
           name: `${user.id}.jpg`,
         });
 
-        await api.patch('users/avatar', data).then(apiResponse => {
-          updateUser(apiResponse.data);
-        });
+        api
+          .patch('users/avatar', data)
+          .then(apiResponse => {
+            updateUser(apiResponse.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       },
     );
   }, [updateUser, user.id]);
