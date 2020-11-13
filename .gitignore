@@ -2,6 +2,8 @@
 #
 .DS_Store
 
+# Coverage report
+
 # Xcode
 #
 build/
@@ -32,6 +34,7 @@ local.properties
 # node.js
 #
 node_modules/
+coverage
 npm-debug.log
 yarn-error.log
 
